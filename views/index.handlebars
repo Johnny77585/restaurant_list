@@ -8,13 +8,23 @@
           <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
             value="{{keyword}}" aria-describedby="search-button">
           <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            <button class="btn btn-major" onclick="return confirmExist()" type="submit" id="search-button"><i
+                class="fas fa-search"></i></button>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<script>
+  function confirmExist() {
+    console.log(restaurant)
+    if (1 === 1) {
+      alert('無符合')
+    }
+  }
+</script>
 
 <!-- restaurant list -->
 <div class="container mt-5 px-md-5">
@@ -24,7 +34,7 @@
         {{#each restaurants}}
         <a href="/restaurants/{{this.id}}" class="text-secondary">
           <div class="card mb-3">
-            <img class="card-img-top" src="{{this.image}}" alt="Sababa 沙巴巴中東美食">
+            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
             <div class="card-body p-3">
               <h6 class="card-title mb-1">{{this.name}}</h6>
 
