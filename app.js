@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
 const Restaurant = require('./models/restaurant')
@@ -21,6 +22,8 @@ const restaurantList = require('./restaurant.json')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // setting static files
 app.use(express.static('public'))
@@ -47,6 +50,15 @@ app.get('/search', (req, res) => {
   if (restaurants.length === 0) {
     res.render('noresult', { keyword: keyword });
   } else { res.render('index', { restaurants: restaurants, keyword: keyword }) }
+})
+//create restaurants
+app.get('/restaurants/new', (req, res) => {
+  return res.render('new')
+})
+app.post('/restaurants', (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/')) // 新增完成後導回首頁
+    .catch(error => console.log(error))
 })
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
