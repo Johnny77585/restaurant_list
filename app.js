@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
     .catch(error => console.error(error))
-  // res.render('index', { restaurants: restaurantList.results })
 })
 
 //search setting
@@ -46,11 +45,11 @@ app.get('/search', (req, res) => {
       || restaurant.category.toLowerCase()
         .includes(keyword.toLowerCase()))
   })
-  console.log(restaurants.length)
   if (restaurants.length === 0) {
     res.render('noresult', { keyword: keyword });
   } else { res.render('index', { restaurants: restaurants, keyword: keyword }) }
 })
+
 //create restaurants
 app.get('/restaurants/new', (req, res) => {
   return res.render('new')
@@ -58,6 +57,13 @@ app.get('/restaurants/new', (req, res) => {
 app.post('/restaurants', (req, res) => {
   Restaurant.create(req.body)
     .then(() => res.redirect('/')) // 新增完成後導回首頁
+    .catch(error => console.log(error))
+})
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('detail', { restaurant }))
     .catch(error => console.log(error))
 })
 

@@ -24,11 +24,11 @@
     </div>
     <div class="mb-3">
       <label for="image" class="form-label">圖片連結<span class="text-danger">*</span></label>
-      <input type="text" class="form-control" id="image" placeholder="" name="image" required />
+      <input type="url" class="form-control" id="image" placeholder="" name="image" required />
     </div>
     <div class="mb-3">
       <label for="location" class="form-label">位址<span class="text-danger">*</span></label>
-      <input type="url" class="form-control" id="location" placeholder="台南市中西區美南街125號" name="location" required />
+      <input type="text" class="form-control" id="location" placeholder="台南市中西區美南街125號" name="location" required />
     </div>
     <div class="mb-3">
       <label for="phone" class="form-label">電話<span class="text-danger">*</span></label>
@@ -40,7 +40,7 @@
     </div>
     <div class="mb-3">
       <label for="rating" class="form-label">評分<span class="text-danger">*</span></label>
-      <input type="number" class="form-control" id="rating" name="rating" required />
+      <input type="number" class="form-control" id="rating" min="0" max="5" step="0.1" name="rating" required />
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">描述<span class="text-danger">*</span></label>
