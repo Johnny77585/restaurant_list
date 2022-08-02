@@ -44,7 +44,11 @@
             </div>
           </div>
         </a>
+        <a href="./restaurants/{{ this._id }}/edit">edit</a>
         <a href="./restaurants/{{ this._id }}">detail</a>
+        <form action="./restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+          <button type="submit">delete</button>
+        </form>
         {{/each}}
       </div>
     </div>
