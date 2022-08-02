@@ -1,10 +1,11 @@
 const express = require('express')
+const exphbs = require('express-handlebars')
 const app = express()
 const port = 3000
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
 const Restaurant = require('./models/restaurant')
+
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -16,9 +17,6 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
 })
-
-const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -39,16 +37,22 @@ app.get('/', (req, res) => {
 //search setting
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
-  const restaurants = restaurantList.results.filter(restaurant => {
-    return (restaurant.name.toLowerCase()
-      .includes(keyword.toLowerCase())
-      || restaurant.category.toLowerCase()
-        .includes(keyword.toLowerCase()))
-  })
-  if (restaurants.length === 0) {
-    res.render('noresult', { keyword: keyword });
-  } else { res.render('index', { restaurants: restaurants, keyword: keyword }) }
+  Restaurant.find({})
+    .lean()
+    .then(restaurantsData => {
+      const restaurants = restaurantsData.filter(restaurant => {
+        return (restaurant.name.toLowerCase()
+          .includes(keyword.toLowerCase())
+          || restaurant.category.toLowerCase()
+            .includes(keyword.toLowerCase()))
+      })
+      if (restaurants.length === 0) {
+        res.render('noresult', { keyword: keyword });
+      } else { res.render('index', { restaurants, keyword: keyword }) }
+    })
 })
+
+
 
 //create restaurants
 app.get('/restaurants/new', (req, res) => {
@@ -59,6 +63,8 @@ app.post('/restaurants', (req, res) => {
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => console.log(error))
 })
+
+//restaurant detail
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -67,12 +73,9 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: restaurant })
-})
+
 
 // start and listen on the Express server
 app.listen(port, () => {
-  console.log(`Express is listening on localhost:${port}`)
+  console.log(`Express is listening on http://localhost:${port}`)
 })
