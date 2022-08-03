@@ -12,6 +12,9 @@
 - 點擊瀏覽餐廳的詳細資訊
 - 開啟餐廳 Google 地圖
 - 搜尋餐廳
+- 新增餐廳
+- 編輯餐廳
+- 刪除餐廳
 
 ## 開始使用
 
@@ -20,13 +23,13 @@
 3. 在本地開啟之後，透過終端機進入資料夾，輸入：
 
    ```bash
-   npm i nodemon
+   npm install
    ```
 
 4. 安裝完畢後，繼續輸入：
 
    ```bash
-   nodemon app.js
+   npm run start
    ```
 
 5. 若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
@@ -45,6 +48,8 @@
 
 - Node.js 10.15.0
 - Express 4.16.1
-- Express-Handlebars 3.0.0
+- Express-Handlebars 4.0.2
 - Bootstrap 4.3.1
 - Font-awesome 5.8.1
+- MongoDB
+- mongoose 6.5.0
