@@ -50,7 +50,7 @@
             style="margin-right: 10px; background-color: #3e8192; border-color:#3e8192">edit</a>
           <a href="./restaurants/{{ this._id }}" class="btn btn-primary btn-sm"
             style="margin-right: 10px; background-color: #3e8192;border-color:#3e8192">detail</a>
-          <form action="./restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+          <form action="./restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
             <button type="submit" class="btn btn-primary btn-sm"
               style="background-color: rgba(207, 18, 18, 0.815);border-color:rgba(207, 18, 18, 0.815)">delete</button>
           </form>
