@@ -1,37 +1,10 @@
 const express = require('express')
-const exphbs = require('express-handlebars')
-const app = express()
-const port = 3000
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
-const Restaurant = require('./models/restaurant')
-const methodOverride = require('method-override')
-const routes = require('./routes')
+const router = express.Router()
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-// 連線成功
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
-
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
-
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
-
-app.use(routes)
-
-// setting static files
-app.use(express.static('public'))
+const Restaurant = require('../../models/restaurant')
 
 // routes setting 瀏覽全部餐廳
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
@@ -39,7 +12,7 @@ app.get('/', (req, res) => {
 })
 
 //search setting
-app.get('/search', (req, res) => {
+router.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
   Restaurant.find({})
     .lean()
@@ -57,17 +30,17 @@ app.get('/search', (req, res) => {
 })
 
 //create restaurants
-app.get('/restaurants/new', (req, res) => {
+router.get('/new', (req, res) => {
   return res.render('new')
 })
-app.post('/restaurants', (req, res) => {
+router.post('/restaurants', (req, res) => {
   Restaurant.create(req.body)
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => console.log(error))
 })
 
 //restaurant detail
-app.get('/restaurants/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
@@ -76,14 +49,14 @@ app.get('/restaurants/:id', (req, res) => {
 })
 
 //restaurant edit
-app.get('/restaurants/:id/edit', (req, res) => {
+router.get('s/:id/edit', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
     .then((restaurant) => res.render('edit', { restaurant }))
     .catch(error => console.log(error))
 })
-app.put('/restaurants/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const id = req.params.id
   const { name, name_en, category, image, location, phone, google_map, rating, description } = req.body
   return Restaurant.findById(id)
@@ -104,7 +77,7 @@ app.put('/restaurants/:id', (req, res) => {
 })
 
 //restaurant delete
-app.delete('/restaurants/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
@@ -112,7 +85,4 @@ app.delete('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// start and listen on the Express server
-app.listen(port, () => {
-  console.log(`Express is listening on http://localhost:${port}`)
-})
+module.exports = router
