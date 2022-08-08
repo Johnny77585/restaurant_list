@@ -3,6 +3,7 @@ const router = express.Router()
 
 const Restaurant = require('../../models/restaurant')
 
+
 // routes setting 瀏覽全部餐廳
 router.get('/', (req, res) => {
   Restaurant.find()
@@ -33,7 +34,7 @@ router.get('/search', (req, res) => {
 router.get('/new', (req, res) => {
   return res.render('new')
 })
-router.post('/restaurants', (req, res) => {
+router.post('/', (req, res) => {
   Restaurant.create(req.body)
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => console.log(error))
@@ -49,7 +50,7 @@ router.get('/:id', (req, res) => {
 })
 
 //restaurant edit
-router.get('s/:id/edit', (req, res) => {
+router.get('/:id/edit', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
