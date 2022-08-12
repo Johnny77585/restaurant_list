@@ -15,6 +15,7 @@
 - 新增餐廳
 - 編輯餐廳
 - 刪除餐廳
+- 按照字母排序 A-Z or Z-A
 
 ## 開始使用
 
@@ -53,3 +54,4 @@
 - Font-awesome 5.8.1
 - MongoDB
 - mongoose 6.5.0
+- handlebars-helpers 0.10.0
