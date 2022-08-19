@@ -10,7 +10,13 @@ router.get('/', (req, res) => {
     .lean()
     .sort({ _id: sort })
     .then(restaurants => res.render('index', { restaurants, sort }))
-    .catch(error => console.error(error))
+    .catch(err => {
+      console.log(err)
+      res.render(
+        'errorPage',
+        { error: err.message }
+      )
+    })
 })
 
 //search setting
