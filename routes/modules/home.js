@@ -5,11 +5,9 @@ const Restaurant = require('../../models/restaurant')
 
 //瀏覽全部餐廳，並排序
 router.get('/', (req, res) => {
-  const sort = req.query.sort
   Restaurant.find()
     .lean()
-    .sort({ _id: sort })
-    .then(restaurants => res.render('index', { restaurants, sort }))
+    .then(restaurants => res.render('index', { restaurants }))
     .catch(err => {
       console.log(err)
       res.render(
@@ -25,7 +23,7 @@ router.get('/search', (req, res) => {
   const sort = req.query.sort
   Restaurant.find({})
     .lean()
-    .sort({ _id: sort })
+    .sort(JSON.parse(sort))
     .then(restaurantsData => {
       const restaurants = restaurantsData.filter(restaurant => {
         return (restaurant.name.toLowerCase()

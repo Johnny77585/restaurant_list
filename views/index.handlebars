@@ -7,8 +7,8 @@
         <a class="btn btn-outline-secondary" style="margin-bottom: 10px" href="./restaurants/new" role="button">新增餐廳</a>
       </div>
       <form action="/search">
-        <div class="row">
-          <div class="col">
+        <div class="row ">
+          <div class="col-6 ">
             <div class="input-group">
               <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類"
                 aria-label="Restaurant Name..." value="{{keyword}}" aria-describedby="search-button">
@@ -17,62 +17,57 @@
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <form action="/">
-                  <select class="custom-select" id="sort" name="sort">
-                    <option value="" selected>排 序 方 式...</option>
-                    <option value="asc" {{#is sort "asc" }} selected {{/is}}>A-Z</option>
-                    <option value="desc" {{#is sort "desc" }} selected {{/is}}>Z-A</option>
-                    {{!-- <option value="asc" {{#is sort "asc" }} selected {{/is}}>類別</option>
-                    <option value="asc" {{#is sort "asc" }} selected {{/is}}>評等</option> --}}
-                  </select>
-              </div>
-              <button type="submit" class="btn btn-sm btn-dark">Submit</button>
+          <div class="col-4 ">
+            <div class=" row ">
+              <select class="custom-select " id="sort" name="sort">
+                <option value="" selected>排 序 方 式...</option>
+                <option value='{"name":"asc"}' {{#is sort '{"name":"asc"}' }} selected {{/is}}>A-Z</option>
+                <option value='{"name":"desc"}' {{#is sort '{"name":"desc"}' }} selected {{/is}}>Z-A</option>
+                <option value='{"category":"asc"}' {{#is sort '{"category":"asc"}' }} selected {{/is}}>類別</option>
+                <option value='{"rating":"asc"}' {{#is sort '{"rating":"asc"}' }} selected {{/is}}>評等</option>
+              </select>
             </div>
+          </div>
+          <div class="col-2 ">
+            <button type="submit" class="btn  btn-dark">Submit</button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
-  </form>
-</div>
-</div>
 </div>
 
 
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-10 col-12 mx-auto">
-      <div class="card-columns">
-        {{#each restaurants}}
-        <a href="/restaurants/{{this._id}}" class="text-secondary">
-          <div class="card mb-3">
-            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
-            <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{this.name}}</h6>
-              <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils pr-2"></i> {{this.category}}
-              </div>
-              <span class="badge badge-pill badge-danger font-weight-normal">
-                {{this.rating}}
-                <i class="fas fa-star fa-xs"></i>
-              </span>
+    {{#each restaurants}}
+    <div class="col-12 col-sm-6 col-md-4">
+      <a href="/restaurants/{{this._id}}" class="text-secondary">
+        <div class="card mb-3">
+          <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+          <div class="card-body p-3">
+            <h6 class="card-title mb-1">{{this.name}}</h6>
+            <div class="restaurant-category mb-1">
+              <i class="fas fa-utensils pr-2"></i> {{this.category}}
             </div>
-        </a>
-        <div class="card-footer text-muted text-right">
-          <a href="./restaurants/{{ this._id }}/edit" class="btn btn-primary btn-sm "
-            style="margin-right: 10px; background-color: #3e8192; border-color:#3e8192">edit</a>
-          <a href="./restaurants/{{ this._id }}" class="btn btn-primary btn-sm"
-            style="margin-right: 10px; background-color: #3e8192;border-color:#3e8192">detail</a>
-          <form action="./restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
-            <button type="submit" class="btn btn-primary btn-sm"
-              style="background-color: rgba(207, 18, 18, 0.815);border-color:rgba(207, 18, 18, 0.815)">delete</button>
-          </form>
+            <span class="badge badge-pill badge-danger font-weight-normal">
+              {{this.rating}}
+              <i class="fas fa-star fa-xs"></i>
+            </span>
+          </div>
+          <div class="card-footer text-muted text-right">
+            <a href="./restaurants/{{ this._id }}/edit" class="btn btn-primary btn-sm "
+              style="margin-right: 10px; background-color: #3e8192; border-color:#3e8192">edit</a>
+            <a href="./restaurants/{{ this._id }}" class="btn btn-primary btn-sm"
+              style="margin-right: 10px; background-color: #3e8192;border-color:#3e8192">detail</a>
+            <form action="./restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+              <button type="submit" class="btn btn-primary btn-sm"
+                style="background-color: rgba(207, 18, 18, 0.815);border-color:rgba(207, 18, 18, 0.815)">delete</button>
+            </form>
+          </div>
         </div>
-      </div>
-      {{/each}}
     </div>
+    {{/each}}
   </div>
-</div>
 </div>
