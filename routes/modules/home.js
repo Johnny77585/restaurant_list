@@ -5,7 +5,8 @@ const Restaurant = require('../../models/restaurant')
 
 //瀏覽全部餐廳，並排序
 router.get('/', (req, res) => {
-  Restaurant.find()
+  const userId = req.user._id
+  Restaurant.find({ userId })
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
     .catch(err => {
@@ -19,9 +20,10 @@ router.get('/', (req, res) => {
 
 //search setting
 router.get('/search', (req, res) => {
+  const userId = req.user._id
   const keyword = req.query.keyword
   const sort = req.query.sort
-  Restaurant.find({})
+  Restaurant.find({ userId })
     .lean()
     .sort(JSON.parse(sort))
     .then(restaurantsData => {
