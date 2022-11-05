@@ -16,6 +16,7 @@
 - 編輯餐廳
 - 刪除餐廳
 - 按照字母排序 A-Z or Z-A
+- 按照類別&評分排序
 
 ## 開始使用
 
@@ -48,7 +49,7 @@
 ## 開發工具
 
 - Node.js 10.15.0
-- Express 4.16.1
+- Express 4.16.4
 - Express-Handlebars 4.0.2
 - Bootstrap 4.3.1
 - Font-awesome 5.8.1
